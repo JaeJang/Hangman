@@ -46,9 +46,10 @@ module.exports = function(app, passport){
         
         app.get('/dic', controller.dic);
     
-        app.get(['/home/:username/rank','home/:username/rank/:rid'], controller.rankPage);
+        app.post('/newRank', controller.newRank);
+        
+        app.get(['/home/:username/rank','/home/:username/rank/:rid'], controller.rankPage);
 
-        app.post('/newRank', controller.newRank)
         
     }
 }

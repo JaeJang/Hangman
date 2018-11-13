@@ -1,5 +1,6 @@
 var mysql=  require('mysql');
 var config = require('../config/database');
+var window = require('window');
 
 var conn = mysql.createConnection({
     host: config.host,
@@ -23,7 +24,11 @@ module.exports={
             if(err){
                 throw err;
             }
-            res.redirect(`/home/${user}/rank/${results.insertId}`);
+            console.log("inserted");
+            //res.status(304).redirect(`/home/${user}/rank/${results.insertId}`);
+            res.send(`/home/${user}/rank/${results.insertId}`);
+            //window.location = ;
+
         });
     },
     getRank: function(res, username,  rid){

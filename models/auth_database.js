@@ -43,7 +43,7 @@ exports.select_passport = (query, wildCard, done)=>{
 exports.checkId = (req, username, password, done)=>{
     console.log('checkId');
     let sql = "SELECT username FROM users WHERE username=?";
-    conn.query(sql, ['local:'+username], (err,results)=>{
+    conn.query(sql, [username+':hangman'], (err,results)=>{
         if(results.lengt > 0){
             console.log('signup_name_error');
             done(null, false, req.flash('signup_name_error','That user name is already taked'));
@@ -54,7 +54,7 @@ exports.checkId = (req, username, password, done)=>{
             } else{
                 hasher({password:password}, (err,pass,salt,hash)=>{
                     let user = {
-                        username:'local:'+username,
+                        username:username+':hangman',
                         password:hash,
                         salt:salt,
                         displayName:username

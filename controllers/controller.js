@@ -48,9 +48,10 @@ exports.newRank = (req,res)=>{
     let life = req.body.life;
     let username = req.session.passport.user.username;
     g_model.newRank(res, username, score, life);
+    //res.send('/home');
 }
 
-exports.rankPage=  (req,res)=>{
+exports.rankPage = (req,res)=>{
     let username = req.params.username;
     let username_session = req.session.passport.user.username;
     let rid = req.params.rid;
@@ -58,5 +59,6 @@ exports.rankPage=  (req,res)=>{
     if(username != username_session){
         res.status(404).render('404');
     }
-    g_model.getRank(res,username,rid);   
+    g_model.getRank(res,username,rid);  
+     
 }

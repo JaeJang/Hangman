@@ -42,7 +42,7 @@ module.exports = function(passport){
                     done(null, false, req.flash('login_fail','Username or password is wrong'));
                 }
             };
-            db.select_passport(sql,['local:'+username],func);
+            db.select_passport(sql,[username+':hangman'],func);
         }
     ));
 

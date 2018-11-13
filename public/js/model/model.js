@@ -192,10 +192,12 @@ Model.prototype.endGame = function(){
 		else{
 			document.querySelector('#fade_out_div').style.display='none';
 			$('#will_move_to_rank').css('display','block');
-			var move_time = 5;
+			var move_time = 3;
 			var move_timer = setInterval(()=>{
 				if(move_time === 0) {
-					$.post('/newRank', { score:this.score, life:this.life_sum},(result)=>{});
+					$.post('/newRank', { score:this.score, life:this.life_sum},(result)=>{
+						window.location = result;
+					});
 					clearInterval(move_timer);
 				}
 				$('#will_move_to_rank').html(MESSAGE.MOVE_MESSAGE + move_time + " second");
