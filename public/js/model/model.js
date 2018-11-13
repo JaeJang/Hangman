@@ -192,7 +192,7 @@ Model.prototype.endGame = function(){
 		else{
 			document.querySelector('#fade_out_div').style.display='none';
 			$('#will_move_to_rank').css('display','block');
-			var move_time = 3;
+			var move_time = WAIT_TIME;
 			var move_timer = setInterval(()=>{
 				if(move_time === 0) {
 					$.post('/newRank', { score:this.score, life:this.life_sum},(result)=>{

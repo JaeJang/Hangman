@@ -1,7 +1,8 @@
 const BUTTON_STYLE_ENABLE = 'btn-lg btn-primary';
 const BUTTON_STYLE_DISABLE_SUCESS = 'btn btn-success';
 const BUTTON_STYLE_DISABLE_FAIL = 'btn btn-danger';
-const TIME_LIMIT = 2;
+const TIME_LIMIT = 30;
+const WAIT_TIME = 2;
 
 /* const WORD_LIST = ['list', 'wonder','world', 'double','place','fast','drive','read','length','size',
 					'electricity','tattoo'];  

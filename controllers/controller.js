@@ -46,19 +46,26 @@ exports.dic = (req,res)=>{
 exports.newRank = (req,res)=>{
     let score = req.body.score;
     let life = req.body.life;
+    console.log(score, life);
     let username = req.session.passport.user.username;
     g_model.newRank(res, username, score, life);
     //res.send('/home');
 }
 
 exports.rankPage = (req,res)=>{
-    let username = req.params.username;
-    let username_session = req.session.passport.user.username;
+    //let username = req.params.username;
+    let username = req.session.passport.user.username;
     let rid = req.params.rid;
 
-    if(username != username_session){
+    /* if(username != username_session){
         res.status(404).render('404');
-    }
+    } */
     g_model.getRank(res,username,rid);  
      
+}
+
+exports.api_1_0_rank = (req,res)=>{
+    let username = req.body.username + ':core';
+    console.log(username);
+    g_model.getRank_s(res,username);
 }

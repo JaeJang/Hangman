@@ -42,14 +42,16 @@ module.exports = function(app, passport){
     {
         app.get('/logout', controller.logout);
     
-        app.get('/home/:username/game', controller.game);
+        app.get('/home/game', controller.game);
         
         app.get('/dic', controller.dic);
     
         app.post('/newRank', controller.newRank);
-        
-        app.get(['/home/:username/rank','/home/:username/rank/:rid'], controller.rankPage);
 
-        
+        app.get(['/home/rank','/home/rank/:rid'], controller.rankPage);
+    }
+    //api call
+    {
+        app.post('/api/1.0/rank', controller.api_1_0_rank);
     }
 }

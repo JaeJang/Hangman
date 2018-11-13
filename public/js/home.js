@@ -22,7 +22,7 @@
     if(start){
         let button = document.createElement('button');
         button.addEventListener('click', ()=>{
-            window.location = '/home/'+start.dataset.username+'/game';
+            window.location = '/home/game';
         });
         button.innerHTML = "START";
         start.appendChild(button);
