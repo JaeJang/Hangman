@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">	
+    
+    <title>Page Title</title>
+</head>
+<body>
+    <div id="title"></div>
+    <div id="game_explain"></div>
+    <h2>login</h2>
+    <form action="/login" method="post">
+        <input type="text" name="username" placeholder="username">
+        <input type="password" name="password" placeholder="password">
+        <input type="submit">
+    </form>
+    <% if (typeof error.login_fail != 'undefined' 
+            && error.login_fail.length > 0){ %>
+    <div class="alert alert-danger"><%=error.login_fail%></div>
+    <% } %>
+    <h2>register</h2>
+    <form action="/register" method="post">
+        <input type="text" name="username" placeholder="username">
+        <input type="text" name="password" placeholder="password">
+        <input type="submit">
+    </form>
+    <% if(typeof error.signup_pwd_error != 'undefined' 
+            && error.signup_pwd_error.length > 0) { %>
+    <div class="alert alert-danger"><%=error.signup_pwd_error%></div>
+    <% } %>
+    <% if(typeof error.signup_name_error != 'undefined' 
+            && error.signup_name_error.length > 0) { %>
+    <div class="alert alert-danger"><%=error.signup_name_error%></div>
+    <% } %>
+    <script src="/js/message.js"></script>
+    <script src="/js/home.js"></script>
+</body>
+</html>
