@@ -1,9 +1,9 @@
-
+var g_model = require('../models/game_model');
 
 exports.loggedIn = function(req, res, next){
 
     //if user logged in
-    if(req.session.passport.user) {
+    if(req.session.passport && req.session.passport.user) {
         next();
     } 
     else {
@@ -45,5 +45,18 @@ exports.dic = (req,res)=>{
 
 exports.newRank = (req,res)=>{
     let score = req.body.score;
+    let life = req.body.life;
+    let username = req.session.passport.user.username;
+    g_model.newRank(res, username, score, life);
+}
 
+exports.rankPage=  (req,res)=>{
+    let username = req.params.username;
+    let username_session = req.session.passport.user.username;
+    let rid = req.params.rid;
+
+    if(username != username_session){
+        res.status(404).render('404');
+    }
+    g_model.getRank(res,username,rid);   
 }

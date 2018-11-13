@@ -195,7 +195,7 @@ Model.prototype.endGame = function(){
 			var move_time = 5;
 			var move_timer = setInterval(()=>{
 				if(move_time === 0) {
-					$.post('/newRank', { score:this.score},(result)=>{});
+					$.post('/newRank', { score:this.score, life:this.life_sum},(result)=>{});
 					clearInterval(move_timer);
 				}
 				$('#will_move_to_rank').html(MESSAGE.MOVE_MESSAGE + move_time + " second");
