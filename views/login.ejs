@@ -39,10 +39,7 @@
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" class="form-control" placeholder="password" required name="password">
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-            <% if (typeof error.login_fail != 'undefined' 
-            && error.login_fail.length > 0){ %>
-            <div class="alert alert-danger"><%=error.login_fail%></div>
-            <% } %>
+    
             <% if(typeof error.signup_pwd_error != 'undefined' 
                     && error.signup_pwd_error.length > 0) { %>
             <div class="alert alert-danger"><%=error.signup_pwd_error%></div>
@@ -90,3 +87,4 @@
     <script src="/js/home.js"></script>
 </body>
 </html>
+
