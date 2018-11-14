@@ -1,4 +1,5 @@
 var g_model = require('../models/game_model');
+var CONST = require('../config/constants');
 
 //GET
 //Check session if user already logged in
@@ -85,12 +86,24 @@ exports.rankPage = (req,res)=>{
 
 exports.api_1_0_rank = (req,res)=>{
     let username = '';
+    if(req.body.token){
+        if(req.body.token != CONST.TOKEN){
+            res.send("PERMISSION DENIED(INCORRECT TOKEN)");
+        }
+    }
+    else if(req.headers['token']){
+        if(req.headers['token'] != CONST.TOKEN){
+            res.send("PERMISSION DENIED(INCORRECT TOKEN)");
+        }
+    } else {
+        res.send("PERMISSION DENIED(INCORRECT TOKEN)");
+    }
+
     if(req.body.username){
         username = req.body.username + ':core';
     } else if(req.headers['username']){
         username = req.headers['username'] + ':core';
     }
-    //let username = req.body.username + ':core';
     console.log(username);
     g_model.getRank_s(res,username);
 }

@@ -6,6 +6,13 @@ CREATE TABLE users (
     PRIMARY KEY(username)
 );
 
+CREATE TABLE apps(
+    appid INT NOT NULL AUTO_INCREMENT,
+    name TEXT NOT NULL,
+    token text NOT NULL,
+    PRIMARY KEY(appid)
+);
+
 CREATE TABLE ranks (
     id INT NOT NULL AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL,

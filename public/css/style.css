@@ -1,3 +1,17 @@
+html,
+body {
+  height: 100%;
+}
+body {
+	
+	background: #9CECFB;
+	/* fallback for old browsers */
+	background: -webkit-linear-gradient(to bottom, #ccffff 0%, #ffffff 100%);
+	/* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to bottom, #ccffff 0%, #ffffff 100%);
+	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+
 #alph_buttons, #target_word_div{
 	text-align:center;
 }
@@ -12,11 +26,4 @@
 	 width:5%;
  }
 
- .error_msg{
-	 color:red;
-	 font-size: 1.5em;
- }
-
- #loading_image{
-	 display:none;
- }
+ 

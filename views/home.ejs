@@ -6,18 +6,17 @@
 
 	<!-- Bootstrap CSS -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">	
-    
+    <link rel="stylesheet" href="/css/style.css">
     <title>Page Title</title>
 </head>
-<body>
-    <div id="title"></div>
-    <div id="game_explain"></div>
+<body class="text-center">
+    <h1 id="title"></h1>
+    <h4 id="game_explain"></h4>
     <div id="hello" data-displayName=<%= user.displayName%>></div>
     <div id="start" data-username=<%= user.username%>></div>
     <a href="/logout">logout</a>
 
     <script src="/js/GLOBAL_CONST.js"></script>
-    <script src="/js/message.js"></script>
     <script src="/js/home.js"></script>
 </body>
 </html>
