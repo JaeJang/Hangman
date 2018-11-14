@@ -43,7 +43,7 @@ exports.select_passport = (query, wildCard, done)=>{
 exports.checkId = (req, username, password, done)=>{
     console.log('checkId');
     let sql = "SELECT username FROM users WHERE username=?";
-    conn.query(sql, [username+':hangman'], (err,results)=>{
+    conn.query(sql, [username], (err,results)=>{
         if(results.length > 0){
             console.log('signup_name_error');
             done(null, false, req.flash('signup_name_error','That user name is already taked'));
@@ -54,7 +54,7 @@ exports.checkId = (req, username, password, done)=>{
             } else{
                 hasher({password:password}, (err,pass,salt,hash)=>{
                     let user = {
-                        username:username+':hangman',
+                        username:username,
                         password:hash,
                         salt:salt,
                         displayName:username
@@ -73,4 +73,27 @@ exports.checkId = (req, username, password, done)=>{
             }
         }
     })
+}
+
+exports.checkAPI = (res,username, token, getRank_s)=>{
+    let sql_token = "SELECT name,token FROM apps WHERE token =?";
+    conn.query(sql_token, [token], (err,results_token)=>{
+        if (err) throw err;
+        if(results_token.length <= 0){
+            res.send("PERMISSION DENIED (INCORRECT TOKEN)");
+        } 
+        else {
+            let appName = results_token[0].name;
+            let sql_name = `SELECT * FROM users WHERE ${appName} = '${username}'`;
+            conn.query(sql_name, (err,results_name)=>{
+                if (err) throw err;
+                if(results_name.length <=0){
+                    res.send({rank:"No record"});
+                }
+                else {
+                    getRank_s(res, results_name[0].username);
+                }
+            });
+        }
+    });
 }

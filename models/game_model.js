@@ -41,39 +41,32 @@ module.exports={
     },
     
     getRank_s: function(res, username){
-        let sql = "SELECT username FROM ranks WHERE username=?";
-        conn.query(sql,username, (err,results)=>{
+        
+        let sql = "SELECT * FROM ranks ORDER BY score DESC, life DESC";
+        conn.query(sql, (err, results)=>{
             if(err)
                 throw err;
-            if(results.length > 0){
-                let sql = "SELECT * FROM ranks ORDER BY score DESC, life DESC";
-                conn.query(sql, (err, results)=>{
-                    if(err)
-                        throw err;
-                    
-                    let rank = 1;
-                    let pre = results[0].score;
-                    if(results[0].username != username){
-                        for(let i = 1; i < results.length; ++i){
-                            let score = results[i].score;
-                            if(score === pre){
-                                if(results[i].life != results[i-1].life){
-                                    ++rank;
-                                }
-                            }else{
-                                ++rank;
-                            }
-                            pre = score;
-                            if(results[i].username == username)
-                                break;
+            
+            let rank = 1;
+            let pre = results[0].score;
+            if(results[0].username != username){
+                for(let i = 1; i < results.length; ++i){
+                    let score = results[i].score;
+                    if(score === pre){
+                        if(results[i].life != results[i-1].life){
+                            ++rank;
                         }
+                    }else{
+                        ++rank;
                     }
-                    res.send({rank:rank});
-                });
-            } else {
-
-                res.send({rank:'No record'});
+                    pre = score;
+                    if(results[i].username == username)
+                        break;
+                }
             }
+            res.send({rank:rank});
         });
+            
+        
     }
 }

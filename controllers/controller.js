@@ -1,4 +1,5 @@
 var g_model = require('../models/game_model');
+var a_model = require('../models/auth_database');
 var CONST = require('../config/constants');
 
 //GET
@@ -86,24 +87,35 @@ exports.rankPage = (req,res)=>{
 
 exports.api_1_0_rank = (req,res)=>{
     let username = '';
+    let token = '';
     if(req.body.token){
-        if(req.body.token != CONST.TOKEN){
-            res.send("PERMISSION DENIED(INCORRECT TOKEN)");
-        }
+        token = req.body.token;
     }
     else if(req.headers['token']){
-        if(req.headers['token'] != CONST.TOKEN){
-            res.send("PERMISSION DENIED(INCORRECT TOKEN)");
-        }
+        token = req.headers['token'];
     } else {
-        res.send("PERMISSION DENIED(INCORRECT TOKEN)");
+        res.send("Token not provided");
     }
 
     if(req.body.username){
-        username = req.body.username + ':core';
+        username = req.body.username;
     } else if(req.headers['username']){
-        username = req.headers['username'] + ':core';
+        username = req.headers['username'];
+    } else{
+        res.send("Username not provided");
     }
-    console.log(username);
-    g_model.getRank_s(res,username);
+    a_model.checkAPI(res,username,token,g_model.getRank_s);
+}
+
+exports.otherAppEntry = (req,res)=>{
+    //check session
+    //if logged in, check user
+    //if different, ask logout
+    //if same, continue
+    //
+    //no session
+    //if first time
+    //ask if have id
+    //if yes, lilnk
+    //if no, create new
 }

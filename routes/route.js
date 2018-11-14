@@ -54,4 +54,8 @@ module.exports = function(app, passport){
     {
         app.post('/api/1.0/rank', controller.api_1_0_rank);
     }
+
+    {
+        app.get('/:app/:username', controller.otherAppEntry);
+    }
 }

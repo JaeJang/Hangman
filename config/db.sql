@@ -13,6 +13,9 @@ CREATE TABLE apps(
     PRIMARY KEY(appid)
 );
 
+INSERT INTO apps (name, token) VALUES('BadgeBook', '123a456');
+ALTER TABLE users ADD BadgeBook TEXT;
+
 CREATE TABLE ranks (
     id INT NOT NULL AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL,
