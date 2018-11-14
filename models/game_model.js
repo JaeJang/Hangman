@@ -56,9 +56,14 @@ module.exports={
                     if(results[0].username != username){
                         for(let i = 1; i < results.length; ++i){
                             let score = results[i].score;
-                            if(score === pre)
-                                continue;
-                            ++rank;
+                            if(score === pre){
+                                if(results[i].life != results[i-1].life){
+                                    ++rank;
+                                }
+                            }else{
+                                ++rank;
+                            }
+                            pre = score;
                             if(results[i].username == username)
                                 break;
                         }

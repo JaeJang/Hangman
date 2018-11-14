@@ -44,7 +44,7 @@ exports.checkId = (req, username, password, done)=>{
     console.log('checkId');
     let sql = "SELECT username FROM users WHERE username=?";
     conn.query(sql, [username+':hangman'], (err,results)=>{
-        if(results.lengt > 0){
+        if(results.length > 0){
             console.log('signup_name_error');
             done(null, false, req.flash('signup_name_error','That user name is already taked'));
         } else {

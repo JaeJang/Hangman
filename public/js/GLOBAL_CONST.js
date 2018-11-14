@@ -4,6 +4,14 @@ const BUTTON_STYLE_DISABLE_FAIL = 'btn btn-danger';
 const TIME_LIMIT = 30;
 const WAIT_TIME = 2;
 
+const MESSAGE = {
+    TITLE:"HANG MAN",
+    GAME_EXPLAIN:`YOU HAVE TO GUESS WORDS AS MANY AS YOU CAN IN ${TIME_LIMIT} SECOND. IF YOU SELECT WRONG LETTERS 7 TIMES FOR EACH TRIAL, THE WORD WILL BE CHANGED TO A NEW ONE`,
+    MOVE_MESSAGE:"We will move to Rank Page in ",
+    PAGE_NOT_FOUND:'PAGE NOT FOUND'
+
+}
+
 /* const WORD_LIST = ['list', 'wonder','world', 'double','place','fast','drive','read','length','size',
 					'electricity','tattoo'];  
 const DEF = ['a series of names or other items written or printed together in a meaningful grouping or sequence so as to constitute a record.', 
