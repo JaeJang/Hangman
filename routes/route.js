@@ -56,6 +56,6 @@ module.exports = function(app, passport){
     }
 
     {
-        app.get('/:app/:username', controller.otherAppEntry);
+        app.get('/:app/:username',controller.checkSession, controller.otherAppEntry);
     }
 }

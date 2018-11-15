@@ -107,11 +107,33 @@ exports.api_1_0_rank = (req,res)=>{
     a_model.checkAPI(res,username,token,g_model.getRank_s);
 }
 
+exports.checkSession = (req,res,next)=>{
+    let app = req.params.app;
+    let uname = req.params.username;
+    let session = req.session.passport;
+    a_model.checkApp(res,app);
+    if(session && session.user){
+        if(session.user[app]){
+            if(session.user[app] == uname){
+                res.redirect('/home');
+            } else {
+                req.logout();
+                
+                //next();
+            }
+        } else {
+            next();
+        }
+        
+        //res.render('other_app_login',{user:req.session.passport.user});
+    } else {
+        next();
+    }
+}
 exports.otherAppEntry = (req,res)=>{
     //check session
     //if logged in, check user
     //if different, ask logout
-    //if same, continue
     //
     //no session
     //if first time

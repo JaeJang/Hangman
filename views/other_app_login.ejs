@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="/css/bootstrap.min.css">-->
+    
+    <link rel="stylesheet" href="/css/signin.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Page Title</title>
+</head>
+<body class="text-center">
+    <h1 id="title" ></h1><br>
+    <h4 id="game_explain" ></h4>
+
+    <form class="form-signin" action="/login" method="post">
+        <img class="mb-4" src="../../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">SIGN IN</h1>
+        <label for="inputEmail" class="sr-only">Username</label>
+        <input type="text"class="form-control" placeholder="username" required autofocus name="username">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password"  class="form-control" placeholder="password" required name="password">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <% if (typeof error.login_fail != 'undefined' 
+            && error.login_fail.length > 0){ %>
+    <div class="alert alert-danger"><%=error.login_fail%></div>
+    <% } %>
+    
+
+    <script src="/js/GLOBAL_CONST.js"></script>
+    <script src="/js/message.js"></script>
+    <script src="/js/home.js"></script>
+</body>
+</html>
+

@@ -43,6 +43,6 @@ require('./controllers/passport')(passport);
 //defines routes
 require('./routes/route.js')(app,passport);
 
-app.listen(CONSTANTS.PORT,'127.0.0.1', ()=>{
+app.listen(CONSTANTS.PORT, CONSTANTS.IP  , ()=>{
     console.log("Connected to " + CONSTANTS.PORT);
 })

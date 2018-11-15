@@ -97,3 +97,19 @@ exports.checkAPI = (res,username, token, getRank_s)=>{
         }
     });
 }
+
+exports.checkApp = (res, app)=>{
+    let sql = `SELECT * FROM apps where name = ${app}`;
+    conn.query(sql, (err, results)=>{
+        if(results.length <= 0)
+            res.status(404).render('/404');
+    });
+}
+
+exports.checkSession_user = (res, session, app, user)=>{
+        if(session.user.app){
+            if(session.user.app == user){
+                res.redirect('/home');
+            }
+        }    
+}
