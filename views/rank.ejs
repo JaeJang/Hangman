@@ -7,10 +7,50 @@
 
     <title>Page Title</title>
 </head>
-<body>
-    <% for(let i = 0; i < ranks.length; ++i){ %>
-        <p><%=ranks[i].username %></p>
-    <% } %>
+<body class="text-center">
+
+    <table class="table" style="width:auto;margin:auto;">
+            <thead>
+                <tr>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Life</th>
+                </tr>
+            </thead>
+            <tbody id="table_body"></tbody>
+            <% if(ranks.length > 0){
+                    let rank = 1;
+                    let pre = ranks[0].score; %>
+                    <tr>
+                        <th><%=rank%></th>
+                        <td><%=ranks[0].username%></td>
+                        <td><%=ranks[0].score%></td>
+                        <td><%=ranks[0].life%></td>
+                    </tr>
+                    <%
+                    for(let i = 1; i < ranks.length; ++i){ 
+                        let score = ranks[i].score;
+                        if(score == pre){
+                            if(ranks[i].life != ranks[i-1].life)
+                                ++rank;
+                        }
+                        else
+                            ++rank;
+                    
+                    %>
+                    <tr>
+                        <th><%=rank%></th>
+                        <td><%=ranks[i].username%></td>
+                        <td><%=ranks[i].score%></td>
+                        <td><%=ranks[i].life%></td>
+                    </tr>
+
+            <%          pre = score;
+                    }
+                } %>
+        
+        </table>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </body>
 </html>

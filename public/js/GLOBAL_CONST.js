@@ -1,7 +1,7 @@
 const BUTTON_STYLE_ENABLE = 'btn-lg btn-primary';
 const BUTTON_STYLE_DISABLE_SUCESS = 'btn btn-success';
 const BUTTON_STYLE_DISABLE_FAIL = 'btn btn-danger';
-const TIME_LIMIT = 30;
+const TIME_LIMIT = 1;
 const WAIT_TIME = 2;
 
 const MESSAGE = {
