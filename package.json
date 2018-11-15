@@ -2,9 +2,10 @@
   "name": "hangman",
   "version": "1.0.0",
   "description": "Guess words as many as you can in 90 second",
-  "main": "index.js",
+  "main": "node app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node app.js"
   },
   "repository": {
     "type": "git",
