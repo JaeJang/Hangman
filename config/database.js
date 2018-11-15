@@ -3,7 +3,7 @@ var local = {
     'user':'root',
     'password':'123a456',
     'port':'3306',
-    'database':'hangman_test'
+    'database':'hangman'
 }
 
 var public = {
@@ -11,7 +11,7 @@ var public = {
     'user':'root',
     'password':'123a456',
     'port':'3306',
-    'database':'hangman'
+    'database':'hangman_public'
 }
 
 module.exports = (process.argv[2] =='public' || process.argv[3] =='public') ? public : local;
