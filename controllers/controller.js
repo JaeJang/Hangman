@@ -88,17 +88,17 @@ exports.rankPage = (req,res)=>{
 exports.api_1_0_rank = (req,res)=>{
     let username = '';
     let token = '';
-    if(req.body.token){
-        token = req.body.token;
+    if(req.body.apptoken){
+        token = req.body.apptoken; 
     }
     else if(req.headers['apptoken']){
-        token = req.headers['token'];
+        token = req.headers['apptoken'];
     } else {
         res.send("Token not provided");
     }
 
-    if(req.body.username){
-        username = req.body.username;
+    if(req.body.userid){
+        username = req.body.userid;
     } else if(req.headers['userid']){
         username = req.headers['userid'];
     } else{
