@@ -91,7 +91,7 @@ exports.api_1_0_rank = (req,res)=>{
     if(req.body.token){
         token = req.body.token;
     }
-    else if(req.headers['token']){
+    else if(req.headers['apptoken']){
         token = req.headers['token'];
     } else {
         res.send("Token not provided");
@@ -99,8 +99,8 @@ exports.api_1_0_rank = (req,res)=>{
 
     if(req.body.username){
         username = req.body.username;
-    } else if(req.headers['username']){
-        username = req.headers['username'];
+    } else if(req.headers['userid']){
+        username = req.headers['userid'];
     } else{
         res.send("Username not provided");
     }

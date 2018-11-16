@@ -4,11 +4,14 @@ var bkfd2Password = require("pbkdf2-password");
 var hasher = bkfd2Password();
 
 module.exports = function(passport){
+    //Executed when user logs in
+    //Passes user data to session
     passport.serializeUser((user,done)=>{
         console.log('serializeUser');
         return done(null, user);
     });
 
+    //
     passport.deserializeUser((user, done)=>{
         console.log('deserializeUser ' + user.displayName);
         let sql = 'SELECT * FROM users WHERE username=?';
