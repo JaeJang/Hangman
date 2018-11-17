@@ -85,6 +85,10 @@ exports.rankPage = (req,res)=>{
      
 }
 
+//POST
+//Take token and userid fro headers or body
+//Sends a message back if any of them is not given
+//When existed, call a_model.checkAPI to verify them and send a rank
 exports.api_1_0_rank = (req,res)=>{
     let username = '';
     let token = '';

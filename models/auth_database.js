@@ -11,7 +11,10 @@ var conn = mysql.createConnection({
 });
 conn.connect();
 
-//
+//query :   SELECT query
+//wildcard: clue for where statement
+//done:     passort done function
+//Called from passport
 exports.select_passport = (query, wildCard, done)=>{
     conn.query(query, wildCard, (err, results)=>{
         if(!err){
