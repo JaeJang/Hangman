@@ -103,10 +103,11 @@ exports.checkAPI = (res,username, token, getRank_s)=>{
 }
 
 exports.checkApp = (res, app)=>{
-    let sql = `SELECT * FROM apps where name = ${app}`;
+    let sql = `SELECT * FROM apps where name = '${app}'`;
     conn.query(sql, (err, results)=>{
+        console.log(typeof results);
         if(results.length <= 0)
-            res.status(404).render('/404');
+            res.status(404).render('404');
     });
 }
 
