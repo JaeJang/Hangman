@@ -43,6 +43,10 @@ require('./controllers/passport')(passport);
 //defines routes
 require('./routes/route.js')(app,passport);
 
+app.use(function (req, res, next) {
+    res.status(404).render('404', {title: "Sorry, page not found", session: req.sessionbo});
+});
+
 app.listen(CONSTANTS.PORT, ()=>{
     console.log("Connected to " + CONSTANTS.PORT);
 })

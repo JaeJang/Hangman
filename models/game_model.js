@@ -40,7 +40,7 @@ module.exports={
         })
     },
     
-    getRank_s: function(res, username){
+    getRank_s: function(res, user){
         
         let sql = "SELECT * FROM ranks ORDER BY score DESC, life DESC";
         conn.query(sql, (err, results)=>{
@@ -49,7 +49,7 @@ module.exports={
             
             let rank = 1;
             let pre = results[0].score;
-            if(results[0].username != username){
+            if(results[0].username != user.username){
                 for(let i = 1; i < results.length; ++i){
                     let score = results[i].score;
                     if(score === pre){
@@ -60,7 +60,7 @@ module.exports={
                         ++rank;
                     }
                     pre = score;
-                    if(results[i].username == username)
+                    if(results[i].username == user.username)
                         break;
                 }
             }

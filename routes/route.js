@@ -8,7 +8,24 @@ module.exports = function(app, passport){
         app.get('/home', controller.loggedIn, controller.home); //home
     
         app.get('/login', controller.login);
-    
+
+
+
+        /* app.post('/any_url_we_will_use'
+                ,passport.authenticate(
+                    'badge-login',
+                    {
+                        failureRedirect:'' //BadgeBook URL
+                    }
+                ),
+                (req,res)=>{
+                    req.session.save(()=>{
+                        res.redirect('/home');
+                    });
+                }); */
+        app.post('/any_url_we_will_user', controller.badgeLogin);
+
+
         app.post('/login',
                 passport.authenticate(
                     'local-login',

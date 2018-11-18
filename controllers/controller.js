@@ -1,5 +1,5 @@
 var g_model = require('../models/game_model');
-var a_model = require('../models/auth_database');
+var a_model = require('../models/auth_model');
 var CONST = require('../config/constants');
 
 //GET
@@ -12,6 +12,7 @@ exports.loggedIn = function(req, res, next){
         next();
     } 
     else {
+        //a_model.test(req,res);
         res.redirect('/login');
     }
 }
@@ -144,4 +145,8 @@ exports.otherAppEntry = (req,res)=>{
     //ask if have id
     //if yes, lilnk
     //if no, create new
+}
+
+exports.badgeLogin = (req,res)=>{
+    a_model.badgeLogin(req,res);
 }

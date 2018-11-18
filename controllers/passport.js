@@ -1,4 +1,4 @@
-var db = require('../models/auth_database');
+var db = require('../models/auth_model');
 var LocalStrategy = require('passport-local').Strategy;
 var bkfd2Password = require("pbkdf2-password");
 var hasher = bkfd2Password();

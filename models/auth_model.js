@@ -3,13 +3,26 @@ var config = require('../config/database');
 var bkfd2Password = require("pbkdf2-password");
 var hasher = bkfd2Password();
 
-var conn = mysql.createConnection({
-    host: config.host,
-    user: config.user,
-    password : config.password,
-    database: config.database
-});
-conn.connect();
+var conn;
+
+const createConn = ()=>{
+    conn = mysql.createConnection({
+        host: config.host,
+        user: config.user,
+        password : config.password,
+        database: config.database
+    });
+    
+    conn.on('error', (error)=>{
+        if(error.code === 'PROTOCOL_CONNECTION_LOST'){
+            return createConn();
+        }
+
+        throw error;
+    });
+}
+//conn.connect();
+createConn();
 
 //query :   SELECT query
 //wildcard: clue for where statement
@@ -95,7 +108,7 @@ exports.checkAPI = (res,username, token, getRank_s)=>{
                     res.send({rank:"No record"});
                 }
                 else {
-                    getRank_s(res, results_name[0].username);
+                    getRank_s(res, results_name[0]);
                 }
             });
         }
@@ -118,3 +131,26 @@ exports.checkSession_user = (res, session, app, user)=>{
             }
         }    
 }
+
+exports.badgeLogin =(req,res)=>{
+    //let username = get username from request body
+    //let sql = "SELECT * FROM users WHERE BadgeBook = ?";
+    //sql query
+    //if found
+    //  req.logIn(results[0],(err)=>{})
+    //not found
+    //  create new account
+    
+}
+
+/* exports.test = (req,res)=>{
+    let sql = "SELECT * FROM users WHERE username='j'";
+    conn.query(sql,(err,results)=>{
+        req.logIn(results[0],(err)=>{
+            console.log(err);
+        });
+        req.session.save(()=>{
+            res.redirect('/home');
+        })
+    })
+} */
