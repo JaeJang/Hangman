@@ -12,9 +12,17 @@ const createConn = ()=>{
         password : config.password,
         database: config.database
     });
-    
+    conn.connect((error)=>{
+		if(error){
+			console.log(`connecting error: ${error}`);
+			setTimeout(createConn, 2000);
+		}
+	});
     conn.on('error', (error)=>{
+		console.log('db connection error');
+		console.log(error);
         if(error.code === 'PROTOCOL_CONNECTION_LOST'){
+			console.log('PROTOCOL_CONNECTION_LOST had occured');
             return createConn();
         }
 
@@ -23,6 +31,7 @@ const createConn = ()=>{
 }
 //conn.connect();
 createConn();
+
 
 //query :   SELECT query
 //wildcard: clue for where statement
