@@ -33,7 +33,7 @@ const createConn = ()=>{
 createConn();
 
 setInterval(()=>{
-	conn.qurey('SELECT 1');
+	conn.query('SELECT 1');
 },10000);
 
 //query :   SELECT query
