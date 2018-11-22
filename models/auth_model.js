@@ -32,6 +32,9 @@ const createConn = ()=>{
 //conn.connect();
 createConn();
 
+setInterval(()=>{
+	conn.qurey('SELECT 1');
+},10000);
 
 //query :   SELECT query
 //wildcard: clue for where statement
