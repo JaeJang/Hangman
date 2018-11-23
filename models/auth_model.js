@@ -327,7 +327,7 @@ exports.verifyUser = (req, username, password, done)=>{
     let sql = "SELECT * FROM users WHERE username = ?";
     conn.query(sql, [username], (err, results)=>{
         if (err){
-            return done(null, false,req.flush('Database fail',"auth_model verifyUser function"));
+            return done(null, false,req.flash('Database fail',"auth_model verifyUser function"));
         } else {
             if (results.length == 1){
                 let user = results[0];
