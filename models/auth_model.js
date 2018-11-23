@@ -128,7 +128,7 @@ exports.checkAPI = (res,username, token, getRank_s)=>{
                     res.send({rank:"No record"});
                 }
                 else {
-                    getRank_s(res, results_name[0]);
+                    getRank_s(res, results_name[0],username);
                 }
             });
         }
