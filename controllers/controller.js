@@ -112,6 +112,8 @@ exports.api_1_0_rank = (req,res)=>{
     a_model.checkAPI(res,username,token,g_model.getRank_s);
 }
 
+
+
 exports.checkSession = (req,res,next)=>{
     let app = req.params.app;
     let uname = req.params.username;
@@ -135,18 +137,75 @@ exports.checkSession = (req,res,next)=>{
         next();
     }
 }
-exports.otherAppEntry = (req,res)=>{
-    //check session
-    //if logged in, check user
-    //if different, ask logout
-    //
-    //no session
-    //if first time
-    //ask if have id
-    //if yes, lilnk
-    //if no, create new
+exports.badgeEntry = (req,res)=>{
+
+    let username = '';
+    let token = '';
+    if(req.body.apptoken){
+        token = req.body.apptoken; 
+    }
+    else if(req.headers['apptoken']){
+        token = req.headers['apptoken'];
+    } else {
+        res.send("Token not provided");
+    }
+
+    if(req.body.username){
+        username = req.body.username;
+    } else if(req.headers['username']){
+        username = req.headers['username'];
+    } else{
+        res.send("Username not provided");
+    }
+
+    let sql_token = "SELECT name,token FROM apps WHERE token =?";
+    conn.query(sql_token, [token], (err,results_token)=>{
+        if (err) throw err;
+        if(results_token.length <= 0){
+            res.send("PERMISSION DENIED (INCORRECT TOKEN)");
+        }  else {
+            let appName = results_token[0].name;
+            //if there is a session, but not the one from badge
+            //log out old session
+            //proceed to next page (auto log in or prompt for account)
+            if(req.session.passport &&
+                req.session.passport.user && 
+                usernamename != req.session.passport.user.badgebook) {
+                    req.logout();
+                    req.session.save(()=>{
+                        a_model.badgeEntry(req, res, username, appName);
+                    });
+            //if there is a session and same as the one from badge
+            } else if(req.session.passport &&
+                req.session.passport.user && username == req.session.passport.user.badgebook) {
+                //no authenticiation required, redirect to home
+                res.redirect('/home');
+            //if there is no session
+            } else {
+                a_model.badgeEntry(req, res, username, appName);
+            }
+        }
+    });
 }
 
 exports.badgeLogin = (req,res)=>{
-    a_model.badgeLogin(req,res);
+    let username = '';
+    let token = '';
+    if(req.body.apptoken){
+        token = req.body.apptoken; 
+    }
+    else if(req.headers['apptoken']){
+        token = req.headers['apptoken'];
+    } else {
+        res.send("Token not provided");
+    }
+
+    if(req.body.username){
+        username = req.body.username;
+    } else if(req.headers['username']){
+        username = req.headers['username'];
+    } else{
+        res.send("Username not provided");
+    }
+    a_model.badgeLogin(req,res,username,token);
 }

@@ -23,11 +23,13 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password"  class="form-control" placeholder="password" required name="password">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" onclick="toBadge()">Sign in with BadgeBook</button>
         <% if (typeof error.login_fail != 'undefined' 
             && error.login_fail.length > 0){ %>
     <div class="alert alert-danger"><%=error.login_fail%></div>
     <% } %>
     </form>
+    
     <br><br>
     <h1 class="h3 mb-3 font-weight-normal">OR</h1>
     <form class="form-signin" action="/register" method="post">
@@ -36,7 +38,7 @@
             <input type="text" class="form-control" placeholder="username" required autofocus name="username">
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" class="form-control" placeholder="password" required name="password">
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
     
             <% if(typeof error.signup_pwd_error != 'undefined' 
                     && error.signup_pwd_error.length > 0) { %>
@@ -83,6 +85,7 @@
     <script src="/js/GLOBAL_CONST.js"></script>
     <script src="/js/message.js"></script>
     <script src="/js/home.js"></script>
+    <script>let toBadge = () => {window.location="https://www.google.com";};</script>
 </body>
 </html>
 

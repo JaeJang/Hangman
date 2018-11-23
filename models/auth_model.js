@@ -144,15 +144,128 @@ exports.checkSession_user = (res, session, app, user)=>{
         }    
 }
 
-exports.badgeLogin =(req,res)=>{
+exports.badgeLogin =(req,res,username, token)=>{
     //let username = get username from request body
-    //let sql = "SELECT * FROM users WHERE BadgeBook = ?";
-    //sql query
-    //if found
-    //  req.logIn(results[0],(err)=>{})
-    //not found
-    //  create new account
     
+    let sql_token = "SELECT name,token FROM apps WHERE token =?";
+    conn.query(sql_token, [token], (err,results_token)=>{
+        if (err) throw err;
+        if(results_token.length <= 0){
+            res.send("PERMISSION DENIED (INCORRECT TOKEN)");
+        } 
+        else {
+            let appName = results_token[0].name;
+            let sql_name = `SELECT * FROM users WHERE ${appName} = '${username}'`;
+            conn.query(sql_name, (err,results_name)=>{
+
+                if (err) throw err;
+                if(results_name.length <=0){
+                    let password = Math.random().toString(36).slice(-8);
+
+                    hasher({password:password}, (err,pass,salt,hash)=>{
+                        let user = {
+                            username:username + "@" + appName,
+                            password:hash,
+                            salt:salt,
+                            displayName:username + "@" + appName,
+                        };
+                        user[appName] = username;
+    
+                        let sql = "INSERT INTO users SET ?";
+                        conn.query(sql, user, (err,results)=>{
+                            if(err){
+                                console.log("DATABASE - INSERT USER");
+                                done(err);
+                            } else {
+                                console.log('Account Created Successfully');
+                                req.logIn(user, (err)=>{
+                                    console.log(err);
+                                });
+                                req.session.save(()=>{
+                                    res.redirect('/');
+                                });
+                            }
+                        });
+                    });
+                }
+                else {
+                    req.logIn(results_name[0], (err)=>{
+                        console.log(err);
+                    });
+                    req.session.save(()=>{
+                        res.redirect('/');
+                    });
+                }
+            });
+        }
+    });
+
+/*
+    //let sql = "SELECT * FROM users WHERE BadgeBook = username";
+    let query = "SELECT * FROM users WHERE BadgeBook = ?";
+    //sql query
+    conn.query(query, username, (err, results)=>{
+        if(!err){
+            //not found, create account automatically with random password
+            if(results.length==0){
+                let password = Math.random().toString(36).slice(-8);
+
+                hasher({password:password}, (err,pass,salt,hash)=>{
+                    let user = {
+                        username:username + "@Badge",
+                        password:hash,
+                        salt:salt,
+                        displayName:username + "@Badge",
+                        BadgeBook:username
+                    };
+
+                    let sql = "INSERT INTO users SET ?";
+                    conn.query(sql, user, (err,results)=>{
+                        if(err){
+                            console.log("DATABASE - INSERT USER");
+                            done(err);
+                        } else {
+                            console.log('Account Created Successfully');
+                            req.logIn(user);
+                            req.session.save(()=>{
+                                res.redirect('/');
+                            });
+                        }
+                    });
+                });
+            //badge user already in database, log user in
+            } else {
+                req.logIn(results[0]);
+                req.session.save(()=>{
+                    res.redirect('/');
+                });
+            }
+        }
+        console.log("database error");
+        console.log(query); 
+    });
+    */
+}
+
+exports.badgeEntry =(req,res,username,appName)=>{
+    let query = `SELECT * FROM users WHERE ${appName} = '${username}'`;
+    //sql query
+    conn.query(query, username, (err, results)=>{
+        if(!err){
+            //not found, ask if user has account
+            if(results.length==0){
+                res.render("do_you_have_account.ejs", {user:username, app:appName});
+            //if found, create session and log user in  
+            } else {
+                req.logIn(results[0], (err)=>{
+                    console.log(err);
+                });
+                req.session.save(()=>{
+                    res.redirect('/');
+                });
+            }
+        }
+    });
 }
 
 /* exports.test = (req,res)=>{
@@ -166,3 +279,15 @@ exports.badgeLogin =(req,res)=>{
         })
     })
 } */
+
+exports.linkAccount = (username, appName, nameInApp) => {
+    let query = `UPDATE users SET ${appName} = '${nameInApp}' WHERE username = '${username}'`;
+    //sql query
+    conn.query(query, (err, results)=>{
+        if(!err){
+            ;
+        } else {
+            console.log("database error");
+        }
+    });
+}

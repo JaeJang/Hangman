@@ -9,8 +9,18 @@ module.exports = function(app, passport){
     
         app.get('/login', controller.login);
 
+        app.post('/badge_login', controller.badgeLogin)
+        app.post('/badge_entry', controller.badgeEntry)
 
 
+        app.get('/badge/link', (req,res)=>{
+            res.render('link.ejs', {nameInApp:req.query.user, appName:releaseEvents.query.app});
+        })
+
+        app.get('/badge/signup', (req,res)=>{
+            res.render('signup.ejs');
+            nameInApp = req.query.username;
+        })
         /* app.post('/any_url_we_will_use'
                 ,passport.authenticate(
                     'badge-login',
@@ -25,6 +35,19 @@ module.exports = function(app, passport){
                 }); */
         app.post('/any_url_we_will_user', controller.badgeLogin);
 
+        app.post('/badge/link', passport.authenticate(
+            'badge-link',
+                {
+                    failureRedirect:'/badge/link',
+                    faliureFlash:true
+                }
+            ),
+            (req,res)=>{
+                req.session.save(()=>{
+                    res.redirect('/');
+                })
+            }
+        );
 
         app.post('/login',
                 passport.authenticate(
@@ -73,6 +96,6 @@ module.exports = function(app, passport){
     }
 
     {
-        app.get('/:app/:username',controller.checkSession, controller.otherAppEntry);
+
     }
 }

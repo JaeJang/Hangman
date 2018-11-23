@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Do you have a Hangman account?</title>
+</head>
+<body>
+    <h1></h1>
+    <button class="btn btn-lg btn-primary btn-block" onclick="toLinkAccount()">Yes</button>
+    <button class="btn btn-lg btn-primary btn-block" onclick="toSignUp()">No</button>
+
+    <script src="/js/GLOBAL_CONST.js"></script>
+    <script src="/js/message.js"></script>
+    <script>
+    let toLinkAccount = () => {window.location="/badge/link?name=<%=user%>&app=<%=app%>"};
+    let toSignUp = () => {window.location="/badge/signup?name=<%=user%>&app=<%=app%>"};
+    </script>
+</body>
+</html>
