@@ -32,6 +32,7 @@ const createConn = ()=>{
 //conn.connect();
 createConn();
 
+//Keep connecting DB
 setInterval(()=>{
 	conn.query('SELECT 1');
 },10000);
@@ -113,7 +114,14 @@ exports.checkAPI = (res,username, token, getRank_s)=>{
         } 
         else {
             let appName = results_token[0].name;
-            let sql_name = `SELECT * FROM users WHERE ${appName} = '${username}'`;
+            /************************************************** */
+            //let sql_name = `SELECT * FROM users WHERE ${appName} = '${username}'`;
+            let sql_name = `SELECT u.username, u.BadgeBook, score,life 
+                                FROM users as u 
+                                INNER JOIN ranks as r 
+                                ON u.username = r.username 
+                                WHERE u.${appName} = '${username}';`
+            /************************************************** */
             conn.query(sql_name, (err,results_name)=>{
                 if (err) throw err;
                 if(results_name.length <=0){
@@ -160,7 +168,7 @@ exports.badgeLogin =(req,res,username, token)=>{
 
                 if (err) throw err;
                 if(results_name.length <=0){
-                    createUserForApp(req, res, username, appName);
+                    exports.createUserForApp(req, res, username, appName);
                 }
                 else {
                     req.logIn(results_name[0], (err)=>{
@@ -281,7 +289,7 @@ exports.badgeEntry =(req,res,username,token)=>{
                 res.redirect('/home');
             //if there is no session
             } else {
-                check_other_app_user(req, res, username, appName);
+                exports.check_other_app_user(req, res, username, appName);
             }
         }
     });
