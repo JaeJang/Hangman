@@ -45,7 +45,7 @@ module.exports={
         })
     },
     
-    getRank_s: function(res, user){
+    getRank_s: function(res, user, username){
         
         let sql = "SELECT * FROM ranks ORDER BY score DESC, life DESC";
         conn.query(sql, (err, results)=>{
@@ -69,7 +69,7 @@ module.exports={
                         break;
                 }
             }
-            res.send({rank:rank});
+            res.send({rank:rank, userid:username});
         });
             
         
