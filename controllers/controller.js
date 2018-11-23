@@ -99,7 +99,7 @@ exports.api_1_0_rank = (req,res)=>{
     else if(req.headers['apptoken']){
         token = req.headers['apptoken'];
     } else {
-        res.send("Token not provided");
+        return res.send("Token not provided");
     }
 
     if(req.body.userid){
@@ -107,7 +107,7 @@ exports.api_1_0_rank = (req,res)=>{
     } else if(req.headers['userid']){
         username = req.headers['userid'];
     } else{
-        res.send("Username not provided");
+        return res.send("Username not provided");
     }
     a_model.checkAPI(res,username,token,g_model.getRank_s);
 }
@@ -147,7 +147,7 @@ exports.badgeEntry = (req,res)=>{
     else if(req.headers['apptoken']){
         token = req.headers['apptoken'];
     } else {
-        res.send("Token not provided");
+        return res.send("Token not provided");
     }
 
     if(req.body.username){
@@ -155,7 +155,7 @@ exports.badgeEntry = (req,res)=>{
     } else if(req.headers['username']){
         username = req.headers['username'];
     } else{
-        res.send("Username not provided");
+        return res.send("Username not provided");
     }
 
     let sql_token = "SELECT name,token FROM apps WHERE token =?";
