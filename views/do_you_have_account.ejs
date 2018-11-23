@@ -2,18 +2,86 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/css/signin.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Do you have a Hangman account?</title>
 </head>
-<body>
-    <h1></h1>
-    <button class="btn btn-lg btn-primary btn-block" onclick="toLinkAccount()">Yes</button>
-    <button class="btn btn-lg btn-primary btn-block" onclick="toSignUp()">No</button>
+<body class="text-center">
+    <h1  style="margin-bottom:2rem;">Do you have a Hangman account?</h1>
+    <div class="container" style="">
+        <!-- Button to Open the Modal -->
+        <button class="btn btn-lg btn-primary btn-block" data-toggle="modal" data-target="#myModal" id="yes">Yes</button>
+        <br>
+        <form action="/badge/signup" method="POST">
+            <input type="hidden" name="username" value="<%=user%>">
+            <input type="hidden" name="appName" value="<%=app%>">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">No</button>
+        </form>
 
+    </div>
+
+  
+  <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Link your Account</h4>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            <form class="form-signin" action="/app_link" method="post">
+                <h1 class="h3 mb-3 font-weight-normal"></h1>
+                <label for="inputEmail" class="sr-only">Username</label>
+                <input type="text"class="form-control" placeholder="username" required  autofocus name="username">
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password"  class="form-control" placeholder="password" required name="password">
+                <input type="hidden" name="appName" value="<%=app%>">
+                <input type="hidden" name="nameInApp" value="<%=user%>">
+                <button class="btn btn-lg btn-primary btn-block" type="submit">LINK</button>
+                <button class="btn btn-lg btn-danger btn-block" data-dismiss="modal">Close</button>
+                <% if (typeof error != 'undefined' && 
+                        typeof error.login_fail != 'undefined' 
+                         && error.login_fail.length > 0){ %>
+                <div class="alert alert-danger"><%=error.login_fail%></div>
+                <% } %>
+            </form>
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="modal-footer">
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+
+
+  
+    <% if (typeof error.login_fail != 'undefined'
+        && error.login_fail.length > 0) { %>
+        <script>
+                document.getElementById('yes').click();
+        </script>
+    <% } %>
     <script src="/js/GLOBAL_CONST.js"></script>
     <script src="/js/message.js"></script>
     <script>
     let toLinkAccount = () => {window.location="/badge/link?name=<%=user%>&app=<%=app%>"};
     let toSignUp = () => {window.location="/badge/signup?name=<%=user%>&app=<%=app%>"};
+    let clickYes = ()=>{ document.getElementById('yes').click(); }
+    //document.getElementById('yes').click();
     </script>
+    
 </body>
 </html>

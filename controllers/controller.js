@@ -99,7 +99,7 @@ exports.api_1_0_rank = (req,res)=>{
     else if(req.headers['apptoken']){
         token = req.headers['apptoken'];
     } else {
-        res.send("Token not provided");
+        return res.send("Token not provided");
     }
 
     if(req.body.userid){
@@ -107,7 +107,7 @@ exports.api_1_0_rank = (req,res)=>{
     } else if(req.headers['userid']){
         username = req.headers['userid'];
     } else{
-        res.send("Username not provided");
+        return res.send("Username not provided");
     }
     a_model.checkAPI(res,username,token,g_model.getRank_s);
 }
@@ -147,7 +147,7 @@ exports.badgeEntry = (req,res)=>{
     else if(req.headers['apptoken']){
         token = req.headers['apptoken'];
     } else {
-        res.send("Token not provided");
+        return res.send("Token not provided");
     }
 
     if(req.body.username){
@@ -155,10 +155,11 @@ exports.badgeEntry = (req,res)=>{
     } else if(req.headers['username']){
         username = req.headers['username'];
     } else{
-        res.send("Username not provided");
+        return res.send("Username not provided");
     }
+    a_model.badgeEntry(req, res, username, token);
 
-    let sql_token = "SELECT name,token FROM apps WHERE token =?";
+    /* let sql_token = "SELECT name,token FROM apps WHERE token =?";
     conn.query(sql_token, [token], (err,results_token)=>{
         if (err) throw err;
         if(results_token.length <= 0){
@@ -185,7 +186,7 @@ exports.badgeEntry = (req,res)=>{
                 a_model.badgeEntry(req, res, username, appName);
             }
         }
-    });
+    }); */
 }
 
 exports.badgeLogin = (req,res)=>{
@@ -197,7 +198,7 @@ exports.badgeLogin = (req,res)=>{
     else if(req.headers['apptoken']){
         token = req.headers['apptoken'];
     } else {
-        res.send("Token not provided");
+        return res.send("Token not provided");
     }
 
     if(req.body.username){
@@ -205,7 +206,22 @@ exports.badgeLogin = (req,res)=>{
     } else if(req.headers['username']){
         username = req.headers['username'];
     } else{
-        res.send("Username not provided");
+        return res.send("Username not provided");
     }
     a_model.badgeLogin(req,res,username,token);
+}
+
+
+exports.do_you_have_account = (req,res)=>{
+    let errors = {
+        login_fail:req.flash('login_fail')
+    }
+    
+    res.render("do_you_have_account.ejs", {user:'hello', app:'BadgeBook', error:errors});
+}
+
+exports.link_out_sign_up = (req, res)=>{
+    let username = req.body.username;
+    let appName = req.body.appName;
+    a_model.createUserForApp(req,res,username,appName);
 }

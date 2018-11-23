@@ -109,7 +109,7 @@ exports.checkAPI = (res,username, token, getRank_s)=>{
     conn.query(sql_token, [token], (err,results_token)=>{
         if (err) throw err;
         if(results_token.length <= 0){
-            res.send("PERMISSION DENIED (INCORRECT TOKEN)");
+            return res.send("PERMISSION DENIED (INCORRECT TOKEN)");
         } 
         else {
             let appName = results_token[0].name;
@@ -160,33 +160,7 @@ exports.badgeLogin =(req,res,username, token)=>{
 
                 if (err) throw err;
                 if(results_name.length <=0){
-                    let password = Math.random().toString(36).slice(-8);
-
-                    hasher({password:password}, (err,pass,salt,hash)=>{
-                        let user = {
-                            username:username + "@" + appName,
-                            password:hash,
-                            salt:salt,
-                            displayName:username + "@" + appName,
-                        };
-                        user[appName] = username;
-    
-                        let sql = "INSERT INTO users SET ?";
-                        conn.query(sql, user, (err,results)=>{
-                            if(err){
-                                console.log("DATABASE - INSERT USER");
-                                done(err);
-                            } else {
-                                console.log('Account Created Successfully');
-                                req.logIn(user, (err)=>{
-                                    console.log(err);
-                                });
-                                req.session.save(()=>{
-                                    res.redirect('/');
-                                });
-                            }
-                        });
-                    });
+                    createUserForApp(req, res, username, appName);
                 }
                 else {
                     req.logIn(results_name[0], (err)=>{
@@ -199,7 +173,38 @@ exports.badgeLogin =(req,res,username, token)=>{
             });
         }
     });
+}
+exports.createUserForApp = (req, res, username, appName)=>{
+    let password = Math.random().toString(36).slice(-8);
 
+    hasher({password:password}, (err,pass,salt,hash)=>{
+        let user = {
+            username:username + "@" + appName,
+            password:hash,
+            salt:salt,
+            displayName:username + "@" + appName,
+        };
+        user[appName] = username;
+
+        let sql = "INSERT INTO users SET ?";
+        conn.query(sql, user, (err,results)=>{
+            if(err){
+                console.log("DATABASE - INSERT USER");
+                console.log(err);
+                return ;
+            } else {
+                console.log('Account Created Successfully');
+                req.logIn(user, (err)=>{
+                    console.log('createUserForApp req.login error');
+                    console.log(err);
+                });
+                req.session.save(()=>{
+                    res.redirect('/');
+                });
+            }
+        });
+    });
+}
 /*
     //let sql = "SELECT * FROM users WHERE BadgeBook = username";
     let query = "SELECT * FROM users WHERE BadgeBook = ?";
@@ -245,15 +250,54 @@ exports.badgeLogin =(req,res,username, token)=>{
         console.log(query); 
     });
     */
+
+
+//Link out from BadgeBook
+exports.badgeEntry =(req,res,username,token)=>{
+
+    let sql_token = "SELECT name,token FROM apps WHERE token =?";
+    conn.query(sql_token, [token], (err,results_token)=>{
+        if (err) throw err;
+
+        if(results_token.length <= 0){
+            res.send("PERMISSION DENIED (INCORRECT TOKEN)");
+        }  else {
+            let appName = results_token[0].name;
+            //if there is a session, but not the one from badge
+            //log out old session
+            //proceed to next page (auto log in or prompt for account)
+            if(req.session.passport &&
+                req.session.passport.user && 
+                usernamename != req.session.passport.user.BadgeBook) {
+                    req.logout();
+                    req.session.save(()=>{
+                        check_other_app_user(req, res, username, appName);
+                    });
+            //if there is a session and same as the one from badge
+            } else if(req.session.passport &&
+                        req.session.passport.user && 
+                        username == req.session.passport.user.badgebook) {
+                //no authenticiation required, redirect to home
+                res.redirect('/home');
+            //if there is no session
+            } else {
+                check_other_app_user(req, res, username, appName);
+            }
+        }
+    });
+
+
+
+    
 }
 
-exports.badgeEntry =(req,res,username,appName)=>{
+exports.check_other_app_user = (req, res, username, appName)=>{
     let query = `SELECT * FROM users WHERE ${appName} = '${username}'`;
     //sql query
     conn.query(query, username, (err, results)=>{
         if(!err){
             //not found, ask if user has account
-            if(results.length==0){
+            if(results.length == 0){
                 res.render("do_you_have_account.ejs", {user:username, app:appName});
             //if found, create session and log user in  
             } else {
@@ -268,26 +312,39 @@ exports.badgeEntry =(req,res,username,appName)=>{
     });
 }
 
-/* exports.test = (req,res)=>{
-    let sql = "SELECT * FROM users WHERE username='j'";
-    conn.query(sql,(err,results)=>{
-        req.logIn(results[0],(err)=>{
-            console.log(err);
-        });
-        req.session.save(()=>{
-            res.redirect('/home');
-        })
-    })
-} */
+exports.verifyUser = (req, username, password, done)=>{
+    let appName = req.body.appName;
+    let nameInApp = req.body.nameInApp;
+    console.log(appName+', '+ nameInApp);
+    let sql = "SELECT * FROM users WHERE username = ?";
+    conn.query(sql, [username], (err, results)=>{
+        if (err){
+            return done(null, false,req.flush('Database fail',"auth_model verifyUser function"));
+        } else {
+            if (results.length == 1){
+                let user = results[0];
+                hasher({password:password, salt:user.salt},
+                    (err, pass, salt, hash)=>{
+                        if(hash === user.password){
+                            console.log(username + " login success");
+                            exports.linkAccount(appName, nameInApp, username);
+                            return done(null, user, req.flash('login_success','Logged in successfully'));
+                        } else{
+                            console.log(username + " login fail");
+                            done(null, false, req.flash('login_fail','Username or password is wrong'));
+                        }
+                    });
+            }
+        }
+    });
+}
 
-exports.linkAccount = (username, appName, nameInApp) => {
+exports.linkAccount = (appName, nameInApp, username) => {
     let query = `UPDATE users SET ${appName} = '${nameInApp}' WHERE username = '${username}'`;
     //sql query
     conn.query(query, (err, results)=>{
-        if(!err){
-            ;
-        } else {
-            console.log("database error");
+        if (err){
+            console.log("auth_model linkAccount DB error");
         }
     });
 }
