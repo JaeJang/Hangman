@@ -276,10 +276,10 @@ exports.badgeEntry =(req,res,username,token)=>{
             //proceed to next page (auto log in or prompt for account)
             if(req.session.passport &&
                 req.session.passport.user && 
-                usernamename != req.session.passport.user.BadgeBook) {
+                username != req.session.passport.user.BadgeBook) {
                     req.logout();
                     req.session.save(()=>{
-                        check_other_app_user(req, res, username, appName);
+                        exports.check_other_app_user(req, res, username, appName);
                     });
             //if there is a session and same as the one from badge
             } else if(req.session.passport &&
@@ -339,7 +339,8 @@ exports.verifyUser = (req, username, password, done)=>{
                             return done(null, user, req.flash('login_success','Logged in successfully'));
                         } else{
                             console.log(username + " login fail");
-                            done(null, false, req.flash('login_fail','Username or password is wrong'));
+                            let message = ['Username or password is wrong',nameInApp,appName];
+                            done(null, false, req.flash('message',['Username or password is wrong', nameInApp, appName]));
                         }
                     });
             }

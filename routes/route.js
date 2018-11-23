@@ -18,10 +18,10 @@ module.exports = function(app, passport){
         app.get('/badge/link', controller.do_you_have_account);
 
         app.post('/badge/signup', controller.link_out_sign_up);
-        app.get('/badge/signup', (req,res)=>{
+        /* app.get('/badge/signup', (req,res)=>{
             res.render('signup.ejs');
             nameInApp = req.query.username;
-        });
+        }); */
 
         app.post('/any_url_we_will_user', controller.badgeLogin);
         

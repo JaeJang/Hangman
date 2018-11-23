@@ -218,11 +218,13 @@ exports.badgeLogin = (req,res)=>{
 
 
 exports.do_you_have_account = (req,res)=>{
+    let message = req.flash('message');
     let errors = {
-        login_fail:req.flash('login_fail')
+        login_fail:message[0]
     }
-    
-    res.render("do_you_have_account.ejs", {user:'hello', app:'BadgeBook', error:errors});
+    console.log(message[1]);
+    console.log(message[2]);
+    res.render("do_you_have_account.ejs", {user:message[1], app:message[2], error:errors});
 }
 
 exports.link_out_sign_up = (req, res)=>{
