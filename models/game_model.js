@@ -9,6 +9,11 @@ var conn = mysql.createConnection({
 });
 conn.connect();
 
+//Keep connecting DB
+setInterval(()=>{
+	conn.query('SELECT 1');
+},10000);
+
 module.exports={
 
 

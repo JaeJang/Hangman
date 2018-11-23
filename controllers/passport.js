@@ -1,4 +1,4 @@
-var db = require('../models/auth_model');
+var a_model = require('../models/auth_model');
 var LocalStrategy = require('passport-local').Strategy;
 var bkfd2Password = require("pbkdf2-password");
 var hasher = bkfd2Password();
@@ -18,9 +18,22 @@ module.exports = function(passport){
         let func = function(user){
             done(null,user);
         }
-        db.select_passport(sql, [user.username], func);
+        a_model.select_passport(sql, [user.username], func);
         
     });
+
+    passport.use('other-login', new LocalStrategy(
+        {
+            usernameField:'username',
+            passwordField:'password',
+            passReqToCallback:true
+        },
+        (req,username, password, done)=>{
+            console.log('passport other login');
+            a_model.verifyUser(req, username, password, done);
+            
+        }
+    ));
 
     passport.use('local-login', new LocalStrategy(
         {
@@ -45,7 +58,7 @@ module.exports = function(passport){
                     done(null, false, req.flash('login_fail','Username or password is wrong'));
                 }
             };
-            db.select_passport(sql,[username],func);
+            a_model.select_passport(sql,[username],func);
         }
     ));
 
@@ -57,7 +70,7 @@ module.exports = function(passport){
         },
         (req,username,password,done)=>{
             console.log('passport local-signup');
-            db.checkId(req, username, password, done);
+            a_model.checkId(req, username, password, done);
         }
     ))
 }
