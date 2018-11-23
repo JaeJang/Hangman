@@ -9,33 +9,27 @@ module.exports = function(app, passport){
     
         app.get('/login', controller.login);
 
-        app.post('/badge_login', controller.badgeLogin)
-        app.post('/badge_entry', controller.badgeEntry)
+        //Login with BadgeBook 
+        app.post('/badge/login', controller.badgeLogin);
 
+        //Link from BadgeBook
+        app.post('/badge/entry', controller.badgeEntry);
 
-        app.get('/badge/link', (req,res)=>{
-            res.render('link.ejs', {nameInApp:req.query.user, appName:releaseEvents.query.app});
-        })
+        app.get('/badge/link', controller.do_you_have_account);
 
+        app.post('/badge/signup', controller.link_out_sign_up);
         app.get('/badge/signup', (req,res)=>{
             res.render('signup.ejs');
             nameInApp = req.query.username;
-        })
-        /* app.post('/any_url_we_will_use'
-                ,passport.authenticate(
-                    'badge-login',
-                    {
-                        failureRedirect:'' //BadgeBook URL
-                    }
-                ),
-                (req,res)=>{
-                    req.session.save(()=>{
-                        res.redirect('/home');
-                    });
-                }); */
-        app.post('/any_url_we_will_user', controller.badgeLogin);
+        });
 
-        app.post('/badge/link', passport.authenticate(
+        app.post('/any_url_we_will_user', controller.badgeLogin);
+        
+
+        app.post('/badge/link',(req,res)=>{
+            
+        });
+        /* app.post('/badge/link', passport.authenticate(
             'badge-link',
                 {
                     failureRedirect:'/badge/link',
@@ -47,6 +41,22 @@ module.exports = function(app, passport){
                     res.redirect('/');
                 })
             }
+        ); */
+        
+        //do you have account - yes - login
+        app.post('/app_link',
+                passport.authenticate(
+                    'other-login',
+                    {
+                        failureRedirect:'/badge/link',
+                        faliureFlash:true
+                    }
+                ),
+                (req,res)=>{
+                    req.session.save(()=>{
+                        res.redirect('/home');
+                    })
+                }
         );
 
         app.post('/login',
