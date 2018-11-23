@@ -93,11 +93,6 @@ exports.rankPage = (req,res)=>{
 exports.api_1_0_rank = (req,res)=>{
     let username = '';
     let token = '';
-	console.log("REQUEST");
-	console.log(req);
-	console.log('--------------------------------');
-	console.log("REQUEST BODY");
-	console.log(req.body);
     if(req.body.apptoken){
         token = req.body.apptoken; 
     }

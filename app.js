@@ -16,6 +16,7 @@ app.set('view engine', 'ejs');
 
 //set body-parser to get parameters from post
 app.use(bodyParser.urlencoded({ extended : false}));
+app.use(bodyParser.json());
 //set public folder
 app.use(express.static('public'));
 
