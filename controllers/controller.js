@@ -150,10 +150,10 @@ exports.badgeEntry = (req,res)=>{
         return res.send("Token not provided");
     }
 
-    if(req.body.username){
-        username = req.body.username;
-    } else if(req.headers['username']){
-        username = req.headers['username'];
+    if(req.body.userid){
+        username = req.body.userid;
+    } else if(req.headers['userid']){
+        username = req.headers['userid'];
     } else{
         return res.send("Username not provided");
     }
