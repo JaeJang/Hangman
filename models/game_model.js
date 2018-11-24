@@ -33,13 +33,13 @@ module.exports={
 
         });
     },
-    getRank: function(res, username,  rid){
+    getRank: function(res, username,  rid, loggedInUser){
         let sql = "SELECT * FROM ranks ORDER BY score DESC, life DESC";
         conn.query(sql, (err, results)=>{
             if(rid){
-                res.render('rank',{ranks:results, rid:rid});
+                res.render('rank',{ranks:results, rid:rid, username});
             } else {
-                res.render('rank',{ranks:results});
+                res.render('rank',{ranks:results, username});
             }
 
         })
