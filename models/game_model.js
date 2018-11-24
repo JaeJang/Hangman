@@ -69,7 +69,7 @@ module.exports={
                         break;
                 }
             }
-            res.send({rank:rank, userid:username});
+            res.send({user:username, appname:'Hangman', badgetype:'Rank', value:rank});
         });
             
         
