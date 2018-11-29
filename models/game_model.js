@@ -1,18 +1,39 @@
 var mysql=  require('mysql');
 var config = require('../config/database');
 
-var conn = mysql.createConnection({
-    host: config.host,
-    user: config.user,
-    password: config.password,
-    database: config.database
-});
-conn.connect();
+var conn;
+
+const createConn = ()=>{
+    conn = mysql.createConnection({
+        host: config.host,
+        user: config.user,
+        password : config.password,
+        database: config.database
+    });
+    conn.connect((error)=>{
+		if(error){
+			console.log(`connecting error: ${error}`);
+			setTimeout(createConn, 2000);
+		}
+	});
+    conn.on('error', (error)=>{
+		console.log('db connection error');
+        if(error.code === 'PROTOCOL_CONNECTION_LOST'){
+			console.log('PROTOCOL_CONNECTION_LOST had occured');
+            return createConn();
+        }
+
+        throw error;
+    });
+}
+//conn.connect();
+createConn();
+
 
 //Keep connecting DB
-setInterval(()=>{
+/* setInterval(()=>{
 	conn.query('SELECT 1');
-},10000);
+},10000); */
 
 module.exports={
 

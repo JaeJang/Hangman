@@ -20,7 +20,6 @@ const createConn = ()=>{
 	});
     conn.on('error', (error)=>{
 		console.log('db connection error');
-		console.log(error);
         if(error.code === 'PROTOCOL_CONNECTION_LOST'){
 			console.log('PROTOCOL_CONNECTION_LOST had occured');
             return createConn();
@@ -33,9 +32,9 @@ const createConn = ()=>{
 createConn();
 
 //Keep connecting DB
-setInterval(()=>{
+/* setInterval(()=>{
 	conn.query('SELECT 1');
-},10000);
+},10000); */
 
 //query :   SELECT query
 //wildcard: clue for where statement
