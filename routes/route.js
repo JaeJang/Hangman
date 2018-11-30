@@ -95,10 +95,11 @@ module.exports = function(app, passport){
         app.get('/home/game', controller.game);
         
         app.get('/dic', controller.dic);
-    
-        app.post('/newRank', controller.newRank);
 
-        app.get(['/home/rank','/home/rank/:rid'], controller.rankPage);
+        app.post('/newRank', controller.newRank);
+        
+
+        //app.get(['/home/rank','/home/rank/:rid'], controller.rankPage);
     }
     //api call
     {

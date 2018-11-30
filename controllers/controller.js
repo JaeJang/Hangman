@@ -20,10 +20,15 @@ exports.loggedIn = function(req, res, next){
 //GET
 //Renders home page passing logged-in user data
 exports.home = function(req, res) {
-    res.render('home', {
+    console.log("home");
+    let user = req.session.passport.user;
+    let rid = req.session.rid;
+    req.session.rid = 0;
+    g_model.home_printRanks(res, req, user, rid);
+    /* res.render('home', {
         //session:req.session
         user:req.session.passport.user
-    });
+    }); */
 }
 
 //GET
@@ -63,12 +68,13 @@ exports.dic = (req,res)=>{
 //POST
 //Get score and life and call newRank in model
 //so that the new data can be inserted in database
-exports.newRank = (req,res)=>{
+exports.newRank = (req,res, next)=>{
     let score = req.body.score;
     let life = req.body.life;
     console.log(score, life);
     let username = req.session.passport.user.username;
-    g_model.newRank(res, username, score, life);
+
+    g_model.newRank(req, res, username, score, life, next);
     //res.send('/home');
 }
 

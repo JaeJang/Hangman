@@ -37,8 +37,20 @@ createConn();
 
 module.exports={
 
+    home_printRanks: (res, req, user, rid)=>{
+        let sql = "SELECT * FROM ranks ORDER BY score DESC, life DESC";
+        conn.query(sql, (err, results)=>{
+            if(rid){
+                res.render('home',{ranks:results, rid:rid, user:user});
+            } else {
+                console.log("home_printRanks");
+                res.render('home',{ranks:results, user:user});
+            }
 
-    newRank: function(res, user, score, life){
+        })
+    },
+
+    newRank: function(req, res, user, score, life, next){
         let newR = {
             username:user,
             score:score,
@@ -49,12 +61,14 @@ module.exports={
             if(err){
                 throw err;
             }
-            console.log("inserted");
-            res.send(`/home/rank/${results.insertId}`);
+            console.log(`${user} score:${score} life:${life} inserted`);
+            //res.send(`/home/rank/${results.insertId}`);
+            req.session.rid = results.insertId;
+            res.send('/');
 
         });
     },
-    getRank: function(res, username,  rid, loggedInUser){
+    /* getRank: function(res, username,  rid, loggedInUser){
         let sql = "SELECT * FROM ranks ORDER BY score DESC, life DESC";
         conn.query(sql, (err, results)=>{
             if(rid){
@@ -64,7 +78,7 @@ module.exports={
             }
 
         })
-    },
+    }, */
     
     getRank_s: function(res, user, username){
         
