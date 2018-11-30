@@ -133,7 +133,7 @@ module.exports={
                         if(results[i][appName]){
                             username = results[i][appName];
                         } else {
-                            username = results[i].username;
+                            username = results[i].username + '(Hangman)';
                         }
                         topArray.push(username);
                             
