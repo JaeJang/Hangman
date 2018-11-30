@@ -113,6 +113,24 @@ exports.api_1_0_rank = (req,res)=>{
 }
 
 
+exports.api_1_0_top = (req, res)=>{
+    let top = 0;
+    let apptoken = '';
+    if(req.body.top){
+        top = parseInt(req.body.top)
+    } else {
+        return res.send("top not provided");
+    }
+
+    if (req.body.apptoken){
+        apptoken = req.body.apptoken;
+    } else {
+        return res.send("apptoken not provided");
+    }
+
+    g_model.topX(res, top, apptoken);
+}
+
 
 exports.checkSession = (req,res,next)=>{
     let app = req.params.app;

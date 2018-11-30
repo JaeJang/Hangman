@@ -103,6 +103,8 @@ module.exports = function(app, passport){
     //api call
     {
         app.post('/api/1.0/rank', controller.api_1_0_rank);
+
+        app.post('/api/1.0/top', controller.api_1_0_top);
     }
 
     {

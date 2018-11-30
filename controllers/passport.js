@@ -7,13 +7,11 @@ module.exports = function(passport){
     //Executed when user logs in
     //Passes user data to session
     passport.serializeUser((user,done)=>{
-        console.log('serializeUser');
         return done(null, user);
     });
 
     //
     passport.deserializeUser((user, done)=>{
-        console.log('deserializeUser ' + user.displayName);
         let sql = 'SELECT * FROM users WHERE username=?';
         let func = function(user){
             done(null,user);
@@ -46,15 +44,14 @@ module.exports = function(passport){
                     hasher({password:password, salt:user.salt},
                                     (err, pass, salt, hash)=>{
                                         if(hash === user.password){
-                                            console.log("login success");
+                                            console.log(username + " login success");
                                             return done(null, user, req.flash('login_success','Logged in successfully'));
                                         } else{
-                                            console.log("login fail");
+                                            console.log(username + " login fail");
                                             done(null, false, req.flash('login_fail','Username or password is wrong'));
                                         }
                                     });
                 } else {
-                    console.log("login fail");
                     done(null, false, req.flash('login_fail','Username or password is wrong'));
                 }
             };

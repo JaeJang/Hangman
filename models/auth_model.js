@@ -95,6 +95,7 @@ exports.checkId = (req, username, password, done)=>{
                             console.log("DATABASE - INSERT USER");
                             done(err);
                         } else {
+                            console.log(username + " account created");
                             done(null, user, req.flash('signup-success','Account Created Successfully'));
                         }
                     });
@@ -127,6 +128,7 @@ exports.checkAPI = (res,username, token, getRank_s)=>{
                     res.send({rank:"No record"});
                 }
                 else {
+                    console.log(appName + " called rank api");
                     getRank_s(res, results_name[0],username);
                 }
             });

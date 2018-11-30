@@ -90,9 +90,59 @@ module.exports={
                         break;
                 }
             }
-            res.send({user:username, appname:'Hangman', badgetype:'Rank', value:rank});
+            return res.send({user:username, appname:'Hangman', badgetype:'Rank', value:rank});
         });
             
         
+    },
+
+    topX: (res,top, apptoken)=>{
+        let sql = "SELECT * FROM apps WHERE token = ?";
+        conn.query(sql, [apptoken], (err, results)=>{
+            if (err){
+                console.log('topX token db error');
+                return ;
+            }
+
+            if(results.length <= 0){
+                return res.send("PERMISSION DENIED (INCORRECT TOKEN)");
+            } else {
+                let appName = results[0].name;
+                console.log(appName + ' called topX api');
+                let sql =`SELECT r.username, r.score, r.life, u.${appName} 
+                            FROM ranks r 
+                            JOIN users u 
+                            ON r.username = u.username
+                            ORDER BY score DESC, life DESC`;
+                
+                conn.query(sql, (err, results)=>{
+                    if (err){
+                        console.log("topX top query error");
+                        return ;   
+                    }
+
+                    if (results.length <=0){
+                        return res.send("NO USER");
+                    } else if (results.length < top){
+                        top = results.length;
+                    }
+
+                    let topArray = [];
+                    for (let i = 0; i < top; ++i){
+                        let username = ''
+                        if(results[i][appName]){
+                            username = results[i][appName];
+                        } else {
+                            username = results[i].username;
+                        }
+                        topArray.push(username);
+                            
+                    }
+
+                    return res.send({appname:'Hangman', value:topArray});
+
+                });
+            }
+        });
     }
 }
