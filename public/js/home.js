@@ -9,7 +9,7 @@
     var desc = document.getElementById('game_explain');
     if(desc){
         desc.innerHTML = MESSAGE.GAME_EXPLAIN;
-        desc.style.fontSize = "10px"
+        desc.style.fontSize = "13px"
     }
     
     var hello = document.getElementById('hello');
