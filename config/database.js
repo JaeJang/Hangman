@@ -1,8 +1,8 @@
 var local = {
     'host':'localhost',
     'user':'root',
-    //'password':'123a456',
-    'password':'',
+    'password':'123a456',
+    //'password':'',
     'port':'3306',
     'database':'hangman'
 }
@@ -10,8 +10,8 @@ var local = {
 var public = {
     'host':'localhost',
     'user':'root',
-    //'password':'123a456',
-    'password':'',
+    'password':'123a456',
+    //'password':'',
     'port':'3306',
     'database':'hangman_public'
 }
