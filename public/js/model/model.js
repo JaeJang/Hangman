@@ -14,7 +14,7 @@ Model.prototype.init = function(view){
 	//guessed words
 	this.revealedWord = null;
 	//life
-	this.life = 7;
+	this.life = 3;
 
 	this.life_sum = 0;
 	//score
@@ -138,7 +138,7 @@ Model.prototype.reset = function()
 	this.generateWord();
 	this.correct = 0;
 	this.life_sum += this.life;
-	this.life = 7;
+	this.life = 3;
 	this.view.updatelife_score(this.life,this.score, null);
 	this.view.resetButtons();
 }
@@ -150,11 +150,11 @@ Model.prototype.start = function(/* name */)
 	/* this.view.disableElement('#first_screen');
 	this.view.enableElement('#contents');
 	this.name = name; */
-	this.time = 0;
+	this.time = TIME_LIMIT;
 	this.timer = setInterval(()=>{
-		this.view.updateTime(++this.time);
+		this.view.updateTime(--this.time);
 		//if the time gets to the limit
-		if(this.time == TIME_LIMIT){
+		if(this.time == 0){
 			setTimeout(()=>{
 				this.endGame();		
 

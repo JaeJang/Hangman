@@ -25,12 +25,16 @@
  //Create buttons and add them in html.
  View.prototype.initButtons = function()
  {
+	let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	for(var i = 0; i < 26; i++)
 	{
 		let tmpB = document.createElement('button');
 		let alph = (i + 10).toString(36);
 		tmpB.className = BUTTON_STYLE_ENABLE;
-		tmpB.innerHTML = alph;
+		tmpB.style.width = "100px"
+		tmpB.style.height = "100px"
+		tmpB.innerHTML = letters.charAt(i);
+		tmpB.style.fontSize = "30px"
 		tmpB.id = alph;
 		tmpB.addEventListener('click', function(){ this.eventListener(event);}.bind(this));
 		this.buttonGroup.appendChild(tmpB);
@@ -110,7 +114,7 @@
  //Update score and life.
  View.prototype.updatelife_score = function(life,score, alpha)
  {
-	document.querySelector('#life').innerHTML = life + ' / 7';
+	document.querySelector('#life').innerHTML = life + ' / 3';
 	document.querySelector('#score').innerHTML = 'Score: ' + score;
 	if(alpha !== null)
 	{

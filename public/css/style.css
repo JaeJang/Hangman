@@ -1,29 +1,34 @@
 html,
+
 body {
   height: 100%;
 }
+
 body {
-	
-	background: #9CECFB;
+
+	font-family: "Bookman Old Style";
+	background: #808080;
 	/* fallback for old browsers */
-	background: -webkit-linear-gradient(to bottom, #ccffff 0%, #ffffff 100%);
+	background: -webkit-linear-gradient(to top, #808080 0%, #ffffff 100%);
 	/* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to bottom, #ccffff 0%, #ffffff 100%);
+	background: linear-gradient(to top, #808080 0%, #ffffff 100%);
 	/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  }
+}
 
 #alph_buttons, #target_word_div{
 	text-align:center;
 }
- #button_group, #target_word{
+
+#button_group, #target_word{
 	margin:auto;
-	
- }
- h1{
+}
+
+h1{
 	text-align:center;
- }
- button{
-	 width:5%;
- }
+}
+
+button{
+	width:5%;
+}
 
  
