@@ -13,7 +13,7 @@ module.exports = function(app, passport){
         app.post('/badge/login', controller.badgeLogin);
 
         //Link from BadgeBook
-        app.post('/badge/entry', controller.badgeEntry);
+        app.get('/badge/:entry', controller.badgeEntry);
 
         app.get('/badge/link', controller.do_you_have_account);
 

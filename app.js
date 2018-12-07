@@ -7,6 +7,7 @@ var MySQLStore = require('express-mysql-session')(session);
 var db_config = require('./config/database');
 var passport = require('passport');
 var flash = require('connect-flash');
+var url = require('url');
 
 var CONSTANTS = require('./config/constants');
 

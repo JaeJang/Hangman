@@ -1,7 +1,8 @@
 var g_model = require('../models/game_model');
 var a_model = require('../models/auth_model');
 var CONST = require('../config/constants');
-
+var url = require('url');
+var window = require('window');
 //GET
 //Check session if user already logged in
 //if not send them to login page
@@ -163,25 +164,45 @@ exports.checkSession = (req,res,next)=>{
 }
 exports.badgeEntry = (req,res)=>{
 
-    let username = '';
-    let token = '';
-    if(req.body.apptoken){
-        token = req.body.apptoken; 
-    }
-    else if(req.headers['apptoken']){
-        token = req.headers['apptoken'];
-    } else {
-        return res.send("Token not provided");
-    }
+    //url = req.params.entry;
+	//console.log(req.params);
+//console.log(url);
+console.log(req.originalUrl);
+   let locationHash = window.location.hash;
+   let path = url.parse(req.url).pathname;
+   console.log(path);
+   console.log(req.params);
+   
+       let urlSplit = locationHash.split('#');
+	       let username;
+		       let token;
+			       if (urlSplit.length > 2) {
+						           username = urlSplit[1];
+								           username = urlSplit[2];
+										           a_model.badgeLogin(req,res,username,token);
+												       }else {
+															           console.log("no login info provided")
+																			       }
 
-    if(req.body.userid){
-        username = req.body.userid;
-    } else if(req.headers['userid']){
-        username = req.headers['userid'];
-    } else{
-        return res.send("Username not provided");
-    }
-    a_model.badgeEntry(req, res, username, token);
+    // let username = '';
+    // let token = '';
+    // if(req.body.apptoken){
+    //     token = req.body.apptoken; 
+    // }
+    // else if(req.headers['apptoken']){
+    //     token = req.headers['apptoken'];
+    // } else {
+    //     return res.send("Token not provided");
+    // }
+
+    // if(req.body.userid){
+    //     username = req.body.userid;
+    // } else if(req.headers['userid']){
+    //     username = req.headers['userid'];
+    // } else{
+    //     return res.send("Username not provided");
+    // }
+    //a_model.badgeEntry(req, res, username, token);
 
     /* let sql_token = "SELECT name,token FROM apps WHERE token =?";
     conn.query(sql_token, [token], (err,results_token)=>{
@@ -214,25 +235,37 @@ exports.badgeEntry = (req,res)=>{
 }
 
 exports.badgeLogin = (req,res)=>{
-    let username = '';
-    let token = '';
-    if(req.body.apptoken){
-        token = req.body.apptoken; 
-    }
-    else if(req.headers['apptoken']){
-        token = req.headers['apptoken'];
-    } else {
-        return res.send("Token not provided");
+
+    let locationHash = window.location.hash;
+    let urlSplit = locationHash.split('#');
+    let username;
+    let token;
+    if (urlSplit.length > 2) {
+        username = urlSplit[1];
+        username = urlSplit[2];
+        a_model.badgeLogin(req,res,username,token);
+    }else {
+        console.log("no login info provided")
     }
 
-    if(req.body.username){
-        username = req.body.username;
-    } else if(req.headers['username']){
-        username = req.headers['username'];
-    } else{
-        return res.send("Username not provided");
-    }
-    a_model.badgeLogin(req,res,username,token);
+    // let username = '';
+    // let token = '';
+    // if(req.body.apptoken){
+    //     token = req.body.apptoken; 
+    // }
+    // else if(req.headers['apptoken']){
+    //     token = req.headers['apptoken'];
+    // } else {
+    //     return res.send("Token not provided");
+    // }
+
+    // if(req.body.username){
+    //     username = req.body.username;
+    // } else if(req.headers['username']){
+    //     username = req.headers['username'];
+    // } else{
+    //     return res.send("Username not provided");
+    // }
 }
 
 

@@ -58,7 +58,7 @@
                         ++rank;
                 if(typeof rid != 'undefined'  && rid == ranks[i].id){ %>
                     <tr style="color:red; font-weight:bold;">
-                    <% } else if(ranks[i].username == user.username && trigger == 0) { %>
+                    <% } else if(ranks[i].username == user.username && trigger == 0 && ranks[i].username !== ranks[0].username) { %>
                         <tr style='color:white; background-color: green;'>
                         <% trigger = 1 %>
                     <% } else if(ranks[i].username == user.username) { %>
