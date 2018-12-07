@@ -164,8 +164,9 @@ exports.checkSession = (req,res,next)=>{
 exports.badgeEntry = (req,res)=>{
 
     url = req.params.entry;
-
-   let locationHash = window.location.hash;
+	console.log(req.params);
+console.log(url);
+//   let locationHash = window.location.hash;
        let urlSplit = url.split('#');
 	       let username;
 		       let token;
