@@ -167,11 +167,12 @@ exports.badgeEntry = (req,res)=>{
     //url = req.params.entry;
 	//console.log(req.params);
 //console.log(url);
+console.log(req.originalUrl);
    let locationHash = window.location.hash;
    let path = url.parse(req.url).pathname;
    console.log(path);
    console.log(req.params);
-   console.log(req.originalUrl);
+   
        let urlSplit = locationHash.split('#');
 	       let username;
 		       let token;
