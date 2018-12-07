@@ -167,7 +167,9 @@ exports.badgeEntry = (req,res)=>{
     //url = req.params.entry;
 	//console.log(req.params);
 //console.log(url);
-console.log(req.originalUrl);
+//console.log(req.originalUrl);
+    a_model.badgeLogin(req,res,'nebraska','123a456');
+/*
    let locationHash = window.location.hash;
    let path = url.parse(req.url).pathname;
    console.log(path);
@@ -183,7 +185,7 @@ console.log(req.originalUrl);
 												       }else {
 															           console.log("no login info provided")
 																			       }
-
+*/
     // let username = '';
     // let token = '';
     // if(req.body.apptoken){
