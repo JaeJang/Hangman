@@ -163,7 +163,17 @@ exports.checkSession = (req,res,next)=>{
 }
 exports.badgeEntry = (req,res)=>{
 
-    
+   let locationHash = window.location.hash;
+       let urlSplit = locationHash.split('#');
+	       let username;
+		       let token;
+			       if (urlSplit.length > 2) {
+						           username = urlSplit[1];
+								           username = urlSplit[2];
+										           a_model.badgeLogin(req,res,username,token);
+												       }else {
+															           console.log("no login info provided")
+																			       }
 
     // let username = '';
     // let token = '';
@@ -183,7 +193,7 @@ exports.badgeEntry = (req,res)=>{
     // } else{
     //     return res.send("Username not provided");
     // }
-    a_model.badgeEntry(req, res, username, token);
+    //a_model.badgeEntry(req, res, username, token);
 
     /* let sql_token = "SELECT name,token FROM apps WHERE token =?";
     conn.query(sql_token, [token], (err,results_token)=>{
