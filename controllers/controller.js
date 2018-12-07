@@ -163,11 +163,11 @@ exports.checkSession = (req,res,next)=>{
 }
 exports.badgeEntry = (req,res)=>{
 
-    url = req.params.entry;
-	console.log(req.params);
-console.log(url);
-//   let locationHash = window.location.hash;
-       let urlSplit = url.split('#');
+    //url = req.params.entry;
+	//console.log(req.params);
+//console.log(url);
+   let locationHash = window.location.hash;
+       let urlSplit = locationHash.split('#');
 	       let username;
 		       let token;
 			       if (urlSplit.length > 2) {
