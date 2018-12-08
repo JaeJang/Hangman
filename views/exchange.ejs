@@ -17,7 +17,7 @@
             token = urlSplit[2];
             console.log(username);
             console.log(token);
-            $.post('/badge/entry', { username:username, token:token},(result)=>{
+            $.post('/badge/entry', { username:username, apptoken:token},(result)=>{
                 window.location = result;
             });
             
