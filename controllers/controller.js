@@ -183,27 +183,32 @@ exports.badgeEntry = (req,res)=>{
 															           console.log("no login info provided")
 																			       }
 */
-    // let username = '';
-    // let token = '';
-    // if(req.body.apptoken){
-    //     token = req.body.apptoken; 
-    // }
-    // else if(req.headers['apptoken']){
-    //     token = req.headers['apptoken'];
-    // } else {
-    //     return res.send("Token not provided");
-    // }
+    
 
-    // if(req.body.userid){
-    //     username = req.body.userid;
-    // } else if(req.headers['userid']){
-    //     username = req.headers['userid'];
-    // } else{
-    //     return res.send("Username not provided");
-    // }
-    //a_model.badgeEntry(req, res, username, token);
+    
+}
+exports.badgeEntry_post = (req, res)=>{
+    let username = '';
+    let token = '';
+    if(req.body.apptoken){
+        token = req.body.apptoken; 
+    }
+    else if(req.headers['apptoken']){
+        token = req.headers['apptoken'];
+    } else {
+        return res.send("Token not provided");
+    }
 
-    /* let sql_token = "SELECT name,token FROM apps WHERE token =?";
+    if(req.body.userid){
+        username = req.body.userid;
+    } else if(req.headers['userid']){
+        username = req.headers['userid'];
+    } else{
+        return res.send("Username not provided");
+    }
+    a_model.badgeEntry(req, res, username, token);
+
+    let sql_token = "SELECT name,token FROM apps WHERE token =?";
     conn.query(sql_token, [token], (err,results_token)=>{
         if (err) throw err;
         if(results_token.length <= 0){
@@ -230,9 +235,8 @@ exports.badgeEntry = (req,res)=>{
                 a_model.badgeEntry(req, res, username, appName);
             }
         }
-    }); */
+    });
 }
-
 
 exports.badgeLogin = (req,res)=>{
 

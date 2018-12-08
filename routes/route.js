@@ -14,6 +14,8 @@ module.exports = function(app, passport){
 
         //Link from BadgeBook
         app.get('/badge/entry', controller.badgeEntry);
+        app.post('/badge/entry', controller.badgeEntry);
+
 
         app.get('/badge/link', controller.do_you_have_account);
 
