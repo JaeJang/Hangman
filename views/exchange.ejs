@@ -5,6 +5,30 @@
     <title>Page Title</title>
 </head>
 <body>
-    
+    <script>
+        let locationHash = window.location.hash;
+        let path = url.parse(req.url).pathname;
+        console.log(path);
+        console.log(req.params);
+   
+        let urlSplit = locationHash.split('#');
+        let username;
+		let token;
+		if (urlSplit.length > 2) {
+			username = urlSplit[1];
+            token = urlSplit[2];
+            console.log(username);
+            console.log(token);
+            $.post('/newRank', { username:username, token:token},(result)=>{
+                window.location = result;
+            });
+            
+
+        }else {
+            console.log("no login info provided")
+		}																	       
+
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </body>
 </html>
