@@ -208,7 +208,7 @@ exports.badgeEntry_post = (req, res)=>{
     }
     a_model.badgeEntry(req, res, username, token);
 
-    let sql_token = "SELECT name,token FROM apps WHERE token =?";
+    /* let sql_token = "SELECT name,token FROM apps WHERE token =?";
     conn.query(sql_token, [token], (err,results_token)=>{
         if (err) throw err;
         if(results_token.length <= 0){
@@ -235,7 +235,7 @@ exports.badgeEntry_post = (req, res)=>{
                 a_model.badgeEntry(req, res, username, appName);
             }
         }
-    });
+    }); */
 }
 
 exports.checkAccount = (req,res)=>{
