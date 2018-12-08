@@ -1,8 +1,6 @@
 var g_model = require('../models/game_model');
 var a_model = require('../models/auth_model');
 var CONST = require('../config/constants');
-var url = require('url');
-var window = require('window');
 //GET
 //Check session if user already logged in
 //if not send them to login page
@@ -164,11 +162,10 @@ exports.checkSession = (req,res,next)=>{
 }
 exports.badgeEntry = (req,res)=>{
 
-    //url = req.params.entry;
-	//console.log(req.params);
-//console.log(url);
-//console.log(req.originalUrl);
-    a_model.badgeLogin(req,res,'nebraska','123a456');
+    
+
+//a_model.badgeLogin(req,res,'nebraska','123a456');
+    res.render('exchange');
 /*
    let locationHash = window.location.hash;
    let path = url.parse(req.url).pathname;
@@ -235,6 +232,7 @@ exports.badgeEntry = (req,res)=>{
         }
     }); */
 }
+
 
 exports.badgeLogin = (req,res)=>{
 
