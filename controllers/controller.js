@@ -238,6 +238,12 @@ exports.badgeEntry_post = (req, res)=>{
     });
 }
 
+exports.checkAccount = (req,res)=>{
+    let username = req.query.user;
+    let appName = req.query.app;
+    res.render("do_you_have_account.ejs", {user:username, app:appName});
+}
+
 exports.badgeLogin = (req,res)=>{
 
     let locationHash = window.location.hash;

@@ -17,7 +17,7 @@
             token = urlSplit[2];
             console.log(username);
             console.log(token);
-            $.post('/newRank', { username:username, token:token},(result)=>{
+            $.post('/badge/entry', { username:username, token:token},(result)=>{
                 window.location = result;
             });
             
@@ -26,7 +26,6 @@
             console.log("no login info provided")
 		}																	       
 
-    </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </script>\
 </body>
 </html>

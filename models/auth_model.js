@@ -287,7 +287,7 @@ exports.badgeEntry =(req,res,username,token)=>{
                         req.session.passport.user && 
                         username == req.session.passport.user.badgebook) {
                 //no authenticiation required, redirect to home
-                res.redirect('/home');
+                res.send('/home');
             //if there is no session
             } else {
                 exports.check_other_app_user(req, res, username, appName);
@@ -307,14 +307,15 @@ exports.check_other_app_user = (req, res, username, appName)=>{
         if(!err){
             //not found, ask if user has account
             if(results.length == 0){
-                res.render("do_you_have_account.ejs", {user:username, app:appName});
+                //res.render("do_you_have_account.ejs", {user:username, app:appName});
+                res.send(`/checkAccount?user=${username}&app=${appName}`);
             //if found, create session and log user in  
             } else {
                 req.logIn(results[0], (err)=>{
                     console.log(err);
                 });
                 req.session.save(()=>{
-                    res.redirect('/');
+                    res.send('/');
                 });
             }
         }
