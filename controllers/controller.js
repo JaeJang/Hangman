@@ -162,30 +162,8 @@ exports.checkSession = (req,res,next)=>{
 }
 exports.badgeEntry = (req,res)=>{
 
-    
-
-//a_model.badgeLogin(req,res,'nebraska','123a456');
     res.render('exchange');
-/*
-   let locationHash = window.location.hash;
-   let path = url.parse(req.url).pathname;
-   console.log(path);
-   console.log(req.params);
-   
-       let urlSplit = locationHash.split('#');
-	       let username;
-		       let token;
-			       if (urlSplit.length > 2) {
-						           username = urlSplit[1];
-								           username = urlSplit[2];
-										           a_model.badgeLogin(req,res,username,token);
-												       }else {
-															           console.log("no login info provided")
-																			       }
-*/
-    
 
-    
 }
 exports.badgeEntry_post = (req, res)=>{
     let username = '';

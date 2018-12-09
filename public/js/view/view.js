@@ -31,10 +31,10 @@
 		let tmpB = document.createElement('button');
 		let alph = (i + 10).toString(36);
 		tmpB.className = BUTTON_STYLE_ENABLE;
-		tmpB.style.width = "100px"
-		tmpB.style.height = "100px"
+		tmpB.style.width = "5rem"
+		tmpB.style.height = "5rem"
 		tmpB.innerHTML = letters.charAt(i);
-		tmpB.style.fontSize = "30px"
+		tmpB.style.fontSize = "3rem"
 		tmpB.id = alph;
 		tmpB.addEventListener('click', function(){ this.eventListener(event);}.bind(this));
 		this.buttonGroup.appendChild(tmpB);

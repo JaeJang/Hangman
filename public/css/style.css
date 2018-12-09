@@ -2,6 +2,7 @@ html,
 
 body {
   height: 100%;
+  overflow: auto;
 }
 
 body {
@@ -26,9 +27,9 @@ body {
 h1{
 	text-align:center;
 }
-
+/* 
 button{
 	width:5%;
 }
-
+ */
  
